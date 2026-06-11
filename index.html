@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<title>Bits</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #f7f8fa;
+    color: #1f2933;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+  .wrap { max-width: 600px; margin: 0 auto; padding: 32px 18px 64px; }
+  h1 { font-size: 26px; font-weight: 700; margin: 0 0 14px; color: #16324f; }
+  button { cursor: pointer; font-family: inherit; }
+  button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 2px solid #2f6db5; outline-offset: 2px; }
+
+  .strip { display: flex; flex-direction: column; gap: 8px; font-size: 14px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #dde3ea; }
+  .strip-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .week-label { white-space: nowrap; }
+  .mic-group { margin-left: auto; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .quota-input { width: 44px; border: 1px solid #c3ccd6; border-radius: 3px; padding: 2px 5px; font-size: 13px; font-family: inherit; background: #fff; }
+  .last-mic { color: #6b7785; font-size: 13px; }
+  .mic-btn { background: transparent; border: 1px solid #2f6db5; color: #2f6db5; border-radius: 3px; padding: 3px 10px; font-size: 13px; }
+  .undo-btn { background: transparent; border: none; color: #2f6db5; font-size: 13px; text-decoration: underline; display: none; }
+  .bar-track { height: 8px; background: #dde3ea; border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; background: #2f6db5; width: 0%; }
+
+  .capture { display: flex; gap: 8px; margin-bottom: 24px; align-items: stretch; }
+  textarea { flex: 1; border: 1px solid #c3ccd6; border-radius: 4px; padding: 10px; font-size: 16px; font-family: inherit; resize: vertical; background: #fff; min-height: 72px; }
+  .add-btn { background: #2f6db5; color: #fff; border: none; border-radius: 4px; padding: 0 18px; font-size: 15px; }
+
+  .filters { display: flex; border-bottom: 1px solid #dde3ea; margin-bottom: 10px; overflow-x: auto; }
+  .filter-btn { background: transparent; border: none; padding: 8px; font-size: 13px; white-space: nowrap; flex: 0 0 auto; color: #6b7785; border-bottom: 2px solid transparent; }
+  .filter-btn.active { color: #16324f; font-weight: 700; border-bottom-color: #2f6db5; }
+
+  .tag-filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .tag-chip { border: 1px solid #c3ccd6; border-radius: 12px; padding: 3px 10px; font-size: 13px; background: transparent; color: #3e5871; }
+  .tag-chip.active { background: #2f6db5; color: #fff; }
+
+  .bit { padding: 14px 0; border-bottom: 1px solid #e3e8ee; }
+  .bit-text { margin: 0 0 8px; font-size: 16px; line-height: 1.55; white-space: pre-wrap; }
+  .bit-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .stage-btn { background: transparent; border: 1px solid; border-radius: 3px; padding: 2px 8px; font-size: 12px; }
+  .stale { color: #16324f; font-size: 12px; font-weight: 700; font-style: italic; }
+  .bit-tag { background: #e6edf4; border: none; border-radius: 12px; padding: 3px 9px; font-size: 12px; color: #3e5871; }
+  .add-tag-btn { background: transparent; border: 1px dashed #aebbc8; border-radius: 12px; padding: 2px 9px; font-size: 12px; color: #8b97a3; }
+  .tag-input { width: 90px; border: 1px solid #c3ccd6; border-radius: 3px; padding: 3px 6px; font-size: 13px; font-family: inherit; background: #fff; }
+  .delete-btn { background: transparent; border: none; color: #aebbc8; font-size: 13px; margin-left: auto; padding: 2px 6px; }
+  .empty { color: #8b97a3; font-style: italic; font-size: 15px; }
+
+  .backup { margin-top: 36px; padding-top: 14px; border-top: 1px solid #dde3ea; display: flex; gap: 10px; align-items: center; }
+  .backup button { background: transparent; border: 1px solid #c3ccd6; color: #6b7785; border-radius: 3px; padding: 4px 10px; font-size: 12px; }
+  .backup-note { font-size: 12px; color: #8b97a3; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Bits</h1>
+
+  <div class="strip">
+    <div class="strip-top">
+      <span class="week-label">This week: <strong id="weekCount">0</strong>/<strong id="quotaShow">10</strong></span>
+      <input type="number" min="1" id="quotaInput" class="quota-input" aria-label="weekly bit quota" />
+      <span class="mic-group">
+        Mics: <strong id="micCount">0</strong><span class="last-mic" id="lastMic"></span>
+        <button class="mic-btn" id="micBtn">+ mic</button>
+        <button class="undo-btn" id="undoBtn">undo</button>
+      </span>
+    </div>
+    <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+  </div>
+
+  <div class="capture">
+    <textarea id="draft" rows="3"></textarea>
+    <button class="add-btn" id="addBtn">Add</button>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div class="tag-filters" id="tagFilters"></div>
+  <div id="list"></div>
+  <p class="empty" id="empty" style="display:none"></p>
+
+  <div class="backup">
+    <button id="exportBtn">Export backup</button>
+    <button id="importBtn">Import</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" />
+    <span class="backup-note">Your data lives on this device only.</span>
+  </div>
+</div>
+
+<script>
+(function () {
+  var KEY = "bit-notebook";
+  var DAY = 86400000;
+  var STALE_DAYS = 14;
+  var NEXT = { concept: "bit", bit: "ready", ready: "proven", proven: "concept" };
+  var STAGE = {
+    concept: { label: "concept", color: "#8b97a3" },
+    bit: { label: "bit", color: "#5a7d9a" },
+    ready: { label: "stage-ready", color: "#2f6db5" },
+    proven: { label: "stage-proven", color: "#16324f" }
+  };
+  var STAGES = ["concept", "bit", "ready", "proven"];
+  var PLACEHOLDERS = [
+    "Write it ugly.",
+    "The funny version comes later. Write the bad one.",
+    "Seinfeld wrote today. Just saying.",
+    "Nobody's watching. Embarrass yourself.",
+    "A hack would've typed by now.",
+    "First thought. Go. Stop reading this box.",
+    "Your best bit started dumber than this.",
+    "Stewing isn't content.",
+    "This box has been empty a suspiciously long time.",
+    "Less thinking. You know what you do.",
+    "You drove past three bits on the way here.",
+    "It's not precious. Type it.",
+    "The bar is on the floor. Trip over it.",
+    "Overthinking detected. Dump it.",
+    "You had it in the car. Where'd it go?"
+  ];
+
+  var state = { bits: [], quota: 10, mics: [] };
+  var stageFilter = "concept";
+  var tagFilter = null;
+  var tagEditing = null;
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw) {
+        var data = JSON.parse(raw);
+        state.bits = (data.bits || []).map(function (b) {
+          if (b.status === "raw") b.status = "concept";
+          if (b.status === "working") b.status = "bit";
+          if (!b.status) b.status = "concept";
+          if (!b.tags) b.tags = [];
+          return b;
+        });
+        state.quota = data.quota || 10;
+        state.mics = data.mics || [];
+      }
+    } catch (e) {}
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify(state));
+    } catch (e) {
+      alert("Save failed — storage may be full or blocked.");
+    }
+  }
+
+  function startOfWeek() {
+    var d = new Date();
+    var day = d.getDay();
+    var diff = day === 0 ? 6 : day - 1;
+    d.setHours(0, 0, 0, 0);
+    return d.getTime() - diff * DAY;
+  }
+
+  function staleDays(b) {
+    if (b.status !== "bit") return 0;
+    var days = Math.floor((Date.now() - (b.statusAt || b.created)) / DAY);
+    return days >= STALE_DAYS ? days : 0;
+  }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function render() {
+    // strip
+    var weekCount = state.bits.filter(function (b) { return b.created >= startOfWeek(); }).length;
+    document.getElementById("weekCount").textContent = weekCount;
+    document.getElementById("quotaShow").textContent = state.quota;
+    document.getElementById("quotaInput").value = state.quota;
+    var pct = Math.min(100, (weekCount / state.quota) * 100);
+    var bar = document.getElementById("barFill");
+    bar.style.width = pct + "%";
+    bar.style.background = weekCount >= state.quota ? "#16324f" : "#2f6db5";
+    document.getElementById("micCount").textContent = state.mics.length;
+    var lm = document.getElementById("lastMic");
+    if (state.mics.length) {
+      var d = new Date(state.mics[state.mics.length - 1]);
+      lm.textContent = " (" + d.toLocaleDateString("en-US", { month: "short", day: "numeric" }) + ")";
+    } else lm.textContent = "";
+
+    // filters
+    var filters = document.getElementById("filters");
+    filters.innerHTML = "";
+    STAGES.forEach(function (s) {
+      var count = state.bits.filter(function (b) { return b.status === s; }).length;
+      var btn = el("button", "filter-btn" + (stageFilter === s ? " active" : ""), s + " (" + count + ")");
+      btn.onclick = function () { stageFilter = s; render(); };
+      filters.appendChild(btn);
+    });
+
+    // tag filters
+    var allTags = [];
+    state.bits.forEach(function (b) {
+      b.tags.forEach(function (t) { if (allTags.indexOf(t) === -1) allTags.push(t); });
+    });
+    allTags.sort();
+    var tf = document.getElementById("tagFilters");
+    tf.innerHTML = "";
+    allTags.forEach(function (t) {
+      var chip = el("button", "tag-chip" + (tagFilter === t ? " active" : ""), t);
+      chip.onclick = function () { tagFilter = tagFilter === t ? null : t; render(); };
+      tf.appendChild(chip);
+    });
+
+    // list
+    var list = document.getElementById("list");
+    list.innerHTML = "";
+    var visible = state.bits.filter(function (b) {
+      return b.status === stageFilter && (!tagFilter || b.tags.indexOf(tagFilter) !== -1);
+    });
+
+    visible.forEach(function (b) {
+      var card = el("div", "bit");
+      card.appendChild(el("p", "bit-text", b.text));
+      var meta = el("div", "bit-meta");
+
+      var stageBtn = el("button", "stage-btn", STAGE[b.status].label + " →");
+      stageBtn.style.color = STAGE[b.status].color;
+      stageBtn.style.borderColor = STAGE[b.status].color;
+      stageBtn.title = "Tap to move to next stage";
+      stageBtn.onclick = function () {
+        b.status = NEXT[b.status];
+        b.statusAt = Date.now();
+        save(); render();
+      };
+      meta.appendChild(stageBtn);
+
+      var sd = staleDays(b);
+      if (sd > 0) {
+        var st = el("span", "stale", "\u23F3 stale " + sd + "d");
+        st.title = "Advance it or kill it";
+        meta.appendChild(st);
+      }
+
+      b.tags.forEach(function (t) {
+        var tag = el("button", "bit-tag", t + " \u2715");
+        tag.title = "Tap to remove tag";
+        tag.onclick = function () {
+          b.tags = b.tags.filter(function (x) { return x !== t; });
+          save(); render();
+        };
+        meta.appendChild(tag);
+      });
+
+      if (tagEditing === b.id) {
+        var input = el("input", "tag-input");
+        input.placeholder = "tag";
+        function commit() {
+          var v = input.value.trim().toLowerCase();
+          if (v && b.tags.indexOf(v) === -1) b.tags.push(v);
+          tagEditing = null;
+          save(); render();
+        }
+        input.onkeydown = function (e) { if (e.key === "Enter") commit(); };
+        input.onblur = commit;
+        meta.appendChild(input);
+        setTimeout(function () { input.focus(); }, 0);
+      } else {
+        var addTag = el("button", "add-tag-btn", "+ tag");
+        addTag.onclick = function () { tagEditing = b.id; render(); };
+        meta.appendChild(addTag);
+      }
+
+      var del = el("button", "delete-btn", "\u2715");
+      del.setAttribute("aria-label", "delete bit");
+      del.onclick = function () {
+        state.bits = state.bits.filter(function (x) { return x.id !== b.id; });
+        save(); render();
+      };
+      meta.appendChild(del);
+
+      card.appendChild(meta);
+      list.appendChild(card);
+    });
+
+    var empty = document.getElementById("empty");
+    if (visible.length === 0) {
+      empty.style.display = "";
+      empty.textContent = state.bits.length === 0 ? "Nothing yet." : "Nothing here. Adjust the filter.";
+    } else {
+      empty.style.display = "none";
+    }
+  }
+
+  // wiring
+  var draft = document.getElementById("draft");
+  draft.placeholder = PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)];
+
+  function addBit() {
+    var text = draft.value.trim();
+    if (!text) return;
+    state.bits.unshift({
+      id: Date.now().toString(36),
+      text: text,
+      status: "concept",
+      tags: [],
+      created: Date.now(),
+      statusAt: Date.now()
+    });
+    draft.value = "";
+    draft.placeholder = PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)];
+    save(); render();
+  }
+  document.getElementById("addBtn").onclick = addBit;
+  draft.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) addBit();
+  });
+
+  document.getElementById("quotaInput").onchange = function (e) {
+    state.quota = parseInt(e.target.value) || 1;
+    save(); render();
+  };
+
+  var undoBtn = document.getElementById("undoBtn");
+  var undoTimer = null;
+  document.getElementById("micBtn").onclick = function () {
+    state.mics.push(Date.now());
+    save(); render();
+    undoBtn.style.display = "inline";
+    clearTimeout(undoTimer);
+    undoTimer = setTimeout(function () { undoBtn.style.display = "none"; }, 3000);
+  };
+  undoBtn.onclick = function () {
+    state.mics.pop();
+    undoBtn.style.display = "none";
+    save(); render();
+  };
+
+  // backup
+  document.getElementById("exportBtn").onclick = function () {
+    var blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "bits-backup-" + new Date().toISOString().slice(0, 10) + ".json";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+  document.getElementById("importBtn").onclick = function () {
+    document.getElementById("importFile").click();
+  };
+  document.getElementById("importFile").onchange = function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var data = JSON.parse(reader.result);
+        if (!data.bits) throw new Error("bad file");
+        if (!confirm("Replace current notebook with this backup?")) return;
+        state = { bits: data.bits || [], quota: data.quota || 10, mics: data.mics || [] };
+        save(); render();
+      } catch (err) {
+        alert("Couldn't read that file. It needs to be a backup exported from this notebook.");
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  };
+
+  load();
+  render();
+})();
+</script>
+</body>
+</html>
