@@ -60,6 +60,9 @@
   .lab { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
   .lab strong { color: var(--accent2); font-size: 14px; }
   .quota-input { width: 46px; border: 1px solid var(--rule); border-radius: 5px; padding: 3px 5px; font-size: 12.5px; font-family: var(--mono); background: var(--card); color: var(--ink); }
+  .quota-btn { background: transparent; border: none; padding: 0; font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+  .quota-btn strong { color: var(--accent2); font-size: 14px; }
+  .quota-num { border-bottom: 1px dashed var(--faint); }
   .last-mic { color: var(--faint); }
   .mic-btn { background: transparent; border: 1.5px solid var(--accent); color: var(--accent); border-radius: 999px; padding: 4px 12px; font-size: 12px; font-family: var(--mono); letter-spacing: .03em; }
   .mic-btn:hover { background: var(--accent); color: var(--onaccent); }
@@ -106,6 +109,16 @@
 
   /* ——— stage tabs / tags ——— */
   .filters { display: flex; border-bottom: 1px solid var(--rule); margin-bottom: 4px; overflow-x: auto; }
+  .cloud-row { display: flex; align-items: flex-start; gap: 8px; margin: 16px 0 14px; min-height: 28px; }
+  .tag-cloud { flex: 1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; min-width: 0; }
+  .cloud-tag { background: transparent; border: none; padding: 0; font-family: var(--serif); color: var(--muted); line-height: 1.3; transition: color .12s; }
+  .cloud-tag:hover { color: var(--accent); }
+  .cloud-tag.active { color: var(--accent2); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .cloud-empty { font-size: 12.5px; color: var(--faint); font-style: italic; }
+  .search-toggle { background: transparent; border: none; color: var(--faint); font-size: 14px; padding: 2px 4px; flex: 0 0 auto; opacity: .55; }
+  .search-toggle:hover { opacity: 1; color: var(--accent); }
+  .search-toggle.active { opacity: 1; color: var(--accent); }
+  .search-row { margin: 0 0 14px; }
   .filter-btn { background: transparent; border: none; padding: 9px 10px; font-size: 12px; white-space: nowrap; flex: 0 0 auto; color: var(--faint); border-bottom: 2px solid transparent; font-family: var(--mono); letter-spacing: .04em; text-transform: uppercase; }
   .filter-btn.active { color: var(--accent2); font-weight: 700; border-bottom-color: var(--accent); }
   .tag-filters { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0 6px; }
@@ -126,7 +139,6 @@
   .dot-proven { background: var(--st-proven); }
   .collapse-btn { background: transparent; border: none; color: var(--faint); font-size: 11.5px; font-family: var(--mono); padding: 2px 6px; }
   .collapse-btn:hover { color: var(--accent); }
-  .search-row { margin: 14px 0 10px; }
   .search-row input { width: 100%; border: 1px solid var(--rule); border-radius: 8px; padding: 8px 12px; font-size: 15px; font-family: var(--serif); background: var(--card); color: var(--ink); }
   .search-row input::placeholder { color: var(--faint); font-style: italic; }
   .edit-area { width: 100%; border: 1px solid var(--accent); border-radius: 7px; padding: 9px 10px; font-size: 16px; font-family: var(--serif); line-height: 1.6; margin: 0 0 9px; background: var(--card); color: var(--ink); min-height: 64px; resize: vertical; }
@@ -143,12 +155,29 @@
   .tag-input { width: 90px; border: 1px solid var(--rule); border-radius: 5px; padding: 3px 7px; font-size: 13px; font-family: var(--mono); background: var(--card); color: var(--ink); }
   .delete-btn { background: transparent; border: none; color: var(--faint); font-size: 13px; margin-left: auto; padding: 2px 6px; opacity: .7; }
   .delete-btn:hover { color: var(--accent2); opacity: 1; }
+  .delete-btn.armed { color: #fff; background: var(--accent2); border-radius: 5px; opacity: 1; font-family: var(--mono); font-size: 11.5px; padding: 3px 8px; }
   .empty { color: var(--faint); font-style: italic; font-size: 15px; padding: 14px 2px; }
 
-  .backup { margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--rule); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .backup { margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--rule); display: flex; gap: 10px; align-items: center; }
+  .device-note { text-align: center; font-size: 11.5px; color: var(--faint); font-style: italic; margin: 18px 0 4px; }
   .backup button { background: var(--card); border: 1px solid var(--rule); color: var(--muted); border-radius: 999px; padding: 4px 12px; font-size: 11.5px; font-family: var(--mono); }
   .backup button:hover { border-color: var(--accent); color: var(--accent); }
   .backup-note { font-size: 11.5px; color: var(--faint); font-style: italic; }
+
+  .boneyard { margin-top: 14px; }
+  .key-btn { background: transparent !important; border: none !important; color: var(--faint) !important; font-size: 15px !important; padding: 2px 4px !important; margin-left: auto; opacity: .55; transition: opacity .15s, transform .15s; }
+  .key-btn:hover { opacity: 1; }
+  .key-btn.turned { opacity: 1; color: var(--accent) !important; transform: rotate(90deg); }
+  .bone-toggle { background: transparent; border: none; color: var(--muted); font-family: var(--mono); font-size: 12.5px; padding: 0; letter-spacing: .04em; }
+  .bone-toggle:hover { color: var(--accent); }
+  .bone-note { font-size: 12.5px; color: var(--faint); font-style: italic; margin: 12px 0 2px; }
+  .bone-row { display: flex; align-items: center; gap: 9px; padding: 10px 0; border-bottom: 1px dashed var(--rule); }
+  .bone-text { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 15px; color: var(--muted); font-style: italic; cursor: pointer; }
+  .bone-text.open { white-space: pre-wrap; }
+  .bone-date { font-family: var(--mono); font-size: 10.5px; color: var(--faint); flex: 0 0 auto; }
+  .dig-btn { background: transparent; border: 1px solid var(--rule); border-radius: 999px; color: var(--muted); font-family: var(--mono); font-size: 11px; padding: 3px 10px; flex: 0 0 auto; }
+  .dig-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .bone-row .delete-btn { margin-left: 0; }
 </style>
 </head>
 <body>
@@ -161,9 +190,10 @@
 
   <div class="strip">
     <div class="srow">
-      <span class="slabel">bits written this week</span>
-      <span class="lab"><strong id="weekCount">0</strong>/<strong id="quotaShow">10</strong></span>
-      <input type="number" min="1" id="quotaInput" class="quota-input" aria-label="weekly bit quota" />
+      <span class="slabel">written this week</span>
+      <span class="lab"><strong id="weekConcepts">0</strong> concepts → <strong id="weekBits">0</strong> bits</span>
+      <button class="quota-btn" id="quotaBtn" title="Tap to change weekly quota"><strong id="weekCount">0</strong>/<span class="quota-num" id="quotaShow">7</span></button>
+      <input type="number" min="1" id="quotaInput" class="quota-input" aria-label="weekly quota" style="display:none" />
     </div>
     <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
     <div class="srow">
@@ -193,9 +223,12 @@
     <button class="add-btn" id="addBtn">Add</button>
   </div>
 
-  <div class="search-row"><input type="search" id="searchBox" placeholder="search bits + tags…" aria-label="search bits and tags" /></div>
   <div class="filters" id="filters"></div>
-  <div class="tag-filters" id="tagFilters"></div>
+  <div class="cloud-row">
+    <div class="tag-cloud" id="tagCloud"></div>
+    <button class="search-toggle" id="searchIcon" title="Find a bit" aria-label="search bit text">&#128269;</button>
+  </div>
+  <div class="search-row" id="searchRow" style="display:none"><input type="search" id="searchBox" placeholder="find a line&hellip;" aria-label="search bit text" /></div>
   <div id="list"></div>
   <p class="empty" id="empty" style="display:none"></p>
 
@@ -203,8 +236,19 @@
     <button id="exportBtn">Export backup</button>
     <button id="importBtn">Import</button>
     <input type="file" id="importFile" accept=".json" style="display:none" />
-    <span class="backup-note">Your data lives on this device only.</span>
+    <button id="keyBtn" class="key-btn" title="The crypt" aria-label="open the crypt">&#128477;</button>
   </div>
+
+  <div class="boneyard">
+    <div id="boneBody" style="display:none">
+      <p class="bone-note" id="boneNote"></p>
+      <div class="search-row"><input type="search" id="boneSearch" placeholder="dig&hellip;" aria-label="search the boneyard" /></div>
+      <div id="boneList"></div>
+      <p class="empty" id="boneEmpty" style="display:none"></p>
+    </div>
+  </div>
+
+  <p class="device-note">Lives here. Dies here. Export accordingly.</p>
 </div>
 
 <script>
@@ -236,16 +280,43 @@
     "It's not precious. Type it.",
     "The bar is on the floor. Trip over it.",
     "Overthinking detected. Dump it.",
-    "You had it in the car. Where'd it go?"
+    "You had it in the car. Where'd it go?",
+    "Conceptualizing again? Cute.",
+    "You're stalling. I can tell from here.",
+    "That's a thought, not a bit. Type anyway.",
+    "The mic doesn't care how you feel about this.",
+    "Bishop's busy. The comic's not. Go.",
+    "You came back to this box. Don't waste the trip.",
+    "Idea's getting cold. Move.",
+    "You've polished this one to death in your head. Stop.",
+    "Funny later. Bad now. That's the deal.",
+    "Still reading? That's the problem.",
+    "Voice memo said it better. Type that.",
+    "You're not blocked. You're scared. Different fix.",
+    "Three people would've laughed already. Go.",
+    "Park the car. Empty your head into this box.",
+    "The good ones never felt good going in. Type it.",
+    "You sold a Tahoe to a guy who said no twice. Write the bit.",
+    "Editing's later. This is the part where you just bleed.",
+    "Nobody became funny by thinking harder.",
+    "You're doing the thing again. The thinking thing.",
+    "If it were precious you'd have written it by now.",
+    "Say it out loud, then type what's left.",
+    "The version in your head is worse than you think. Get it out.",
+    "Quota's watching. So am I."
   ];
 
-  var state = { bits: [], quota: 10, mics: [], riffs: [], planned: [] };
+  var state = { bits: [], quota: 10, mics: [], riffs: [], planned: [], boneyard: [] };
   var stageFilter = "concept";
   var tagFilter = null;
   var tagEditing = null;
   var textEditing = null;
   var expandedId = null;
   var searchQuery = "";
+  var confirmDeleteId = null;
+  var boneSearchQuery = "";
+  var boneExpandedId = null;
+  var boneOpen = false;
 
   function load() {
     try {
@@ -263,6 +334,7 @@
         state.mics = data.mics || [];
         state.riffs = data.riffs || [];
         state.planned = data.planned || [];
+        state.boneyard = data.boneyard || [];
       }
     } catch (e) {}
   }
@@ -298,7 +370,12 @@
 
   function render() {
     // strip
-    var weekCount = state.bits.filter(function (b) { return b.created >= startOfWeek(); }).length;
+    var weekEntries = state.bits.filter(function (b) { return b.created >= startOfWeek(); });
+    var weekConcepts = weekEntries.filter(function (b) { return b.status === "concept"; }).length;
+    var weekBits = weekEntries.filter(function (b) { return b.status !== "concept"; }).length;
+    var weekCount = weekBits;
+    document.getElementById("weekConcepts").textContent = weekConcepts;
+    document.getElementById("weekBits").textContent = weekBits;
     document.getElementById("weekCount").textContent = weekCount;
     document.getElementById("quotaShow").textContent = state.quota;
     document.getElementById("quotaInput").value = state.quota;
@@ -359,23 +436,31 @@
       filters.appendChild(btn);
     });
 
-    // tag filters
-    var allTags = [];
+    // tag cloud — frequency across all bits, sized by count
+    var counts = {};
     state.bits.forEach(function (b) {
-      b.tags.forEach(function (t) { if (allTags.indexOf(t) === -1) allTags.push(t); });
+      b.tags.forEach(function (t) { counts[t] = (counts[t] || 0) + 1; });
     });
-    allTags.sort();
-    var tf = document.getElementById("tagFilters");
-    tf.innerHTML = "";
-    allTags.forEach(function (t) {
-      var tagCount = state.bits.filter(function (b) {
-        return b.status === stageFilter && b.tags.indexOf(t) !== -1;
-      }).length;
-      if (tagCount === 0 && tagFilter !== t) return;
-      var chip = el("button", "tag-chip" + (tagFilter === t ? " active" : ""), t + " (" + tagCount + ")");
-      chip.onclick = function () { tagFilter = tagFilter === t ? null : t; render(); };
-      tf.appendChild(chip);
+    var cloudTags = Object.keys(counts).sort(function (a, b2) {
+      return counts[b2] - counts[a] || a.localeCompare(b2);
     });
+    var tc = document.getElementById("tagCloud");
+    tc.innerHTML = "";
+    if (cloudTags.length === 0) {
+      tc.appendChild(el("span", "cloud-empty", "Tag your bits and they'll surface here."));
+    } else {
+      var max = counts[cloudTags[0]];
+      var min = counts[cloudTags[cloudTags.length - 1]];
+      cloudTags.forEach(function (t) {
+        var ratio = max === min ? 1 : (counts[t] - min) / (max - min);
+        var size = 13 + Math.round(ratio * 13); // 13px → 26px
+        var chip = el("button", "cloud-tag" + (tagFilter === t ? " active" : ""), t);
+        chip.style.fontSize = size + "px";
+        chip.title = counts[t] + (counts[t] === 1 ? " bit" : " bits");
+        chip.onclick = function () { tagFilter = tagFilter === t ? null : t; render(); };
+        tc.appendChild(chip);
+      });
+    }
 
     // list
     var list = document.getElementById("list");
@@ -386,7 +471,8 @@
         var hay = (b.text + " " + b.tags.join(" ")).toLowerCase();
         return hay.indexOf(q) !== -1;
       }
-      return b.status === stageFilter && (!tagFilter || b.tags.indexOf(tagFilter) !== -1);
+      if (tagFilter) return b.tags.indexOf(tagFilter) !== -1;
+      return b.status === stageFilter;
     });
     visible.sort(function (a, b2) { return b2.created - a.created; });
 
@@ -520,9 +606,13 @@
       meta.appendChild(col);
 
       var del = el("button", "delete-btn", "\u2715");
-      del.setAttribute("aria-label", "delete bit");
+      del.title = "Bury it";
+      del.setAttribute("aria-label", "bury bit");
       del.onclick = function () {
+        b.buriedAt = Date.now();
+        state.boneyard.unshift(b);
         state.bits = state.bits.filter(function (x) { return x.id !== b.id; });
+        expandedId = null;
         save(); render();
       };
       meta.appendChild(del);
@@ -538,6 +628,74 @@
       else empty.textContent = state.bits.length === 0 ? "Nothing yet." : "Nothing here. Adjust the filter.";
     } else {
       empty.style.display = "none";
+    }
+
+    renderBoneyard();
+  }
+
+  function renderBoneyard() {
+    var n = state.boneyard.length;
+
+    var bq = boneSearchQuery.trim().toLowerCase();
+    var bones = state.boneyard.filter(function (b) {
+      if (!bq) return true;
+      return (b.text + " " + b.tags.join(" ")).toLowerCase().indexOf(bq) !== -1;
+    });
+
+    var bl = document.getElementById("boneList");
+    bl.innerHTML = "";
+    bones.forEach(function (b) {
+      var row = el("div", "bone-row");
+
+      var open = boneExpandedId === b.id;
+      var txt = el("p", "bone-text" + (open ? " open" : ""), open ? b.text : b.text.split("\n")[0]);
+      txt.title = "Tap to read";
+      txt.onclick = function () { boneExpandedId = open ? null : b.id; render(); };
+      row.appendChild(txt);
+
+      var d = new Date(b.buriedAt || b.created);
+      row.appendChild(el("span", "bone-date", "\u2020 " + d.toLocaleDateString("en-US", { month: "short", day: "numeric" })));
+
+      var dig = el("button", "dig-btn", "\u26CF dig up");
+      dig.title = "Resurrect as concept";
+      dig.onclick = function () {
+        b.status = "concept";
+        b.statusAt = Date.now();
+        delete b.buriedAt;
+        state.bits.unshift(b);
+        state.boneyard = state.boneyard.filter(function (x) { return x.id !== b.id; });
+        boneExpandedId = null;
+        save(); render();
+      };
+      row.appendChild(dig);
+
+      var armed = confirmDeleteId === b.id;
+      var del = el("button", "delete-btn" + (armed ? " armed" : ""), armed ? "gone forever?" : "\u2715");
+      del.setAttribute("aria-label", armed ? "confirm permanent delete" : "delete forever");
+      del.onclick = function () {
+        if (confirmDeleteId === b.id) {
+          state.boneyard = state.boneyard.filter(function (x) { return x.id !== b.id; });
+          confirmDeleteId = null;
+          save(); render();
+        } else {
+          confirmDeleteId = b.id;
+          render();
+          setTimeout(function () {
+            if (confirmDeleteId === b.id) { confirmDeleteId = null; render(); }
+          }, 3500);
+        }
+      };
+      row.appendChild(del);
+
+      bl.appendChild(row);
+    });
+
+    var be = document.getElementById("boneEmpty");
+    if (bones.length === 0) {
+      be.style.display = "";
+      be.textContent = bq ? "Nothing buried under that name." : "No bodies. Yet.";
+    } else {
+      be.style.display = "none";
     }
   }
 
@@ -561,18 +719,49 @@
     save(); render();
   }
   document.getElementById("addBtn").onclick = addBit;
+  document.getElementById("searchIcon").onclick = function () {
+    var row = document.getElementById("searchRow");
+    var box = document.getElementById("searchBox");
+    var opening = row.style.display === "none";
+    row.style.display = opening ? "" : "none";
+    this.classList.toggle("active", opening);
+    if (opening) { box.focus(); }
+    else { box.value = ""; searchQuery = ""; render(); }
+  };
   document.getElementById("searchBox").oninput = function (e) {
     searchQuery = e.target.value;
     render();
+  };
+  document.getElementById("searchBox").onblur = function () {
+    if (!this.value.trim()) {
+      document.getElementById("searchRow").style.display = "none";
+      document.getElementById("searchIcon").classList.remove("active");
+      searchQuery = "";
+      render();
+    }
   };
   draft.addEventListener("keydown", function (e) {
     if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) addBit();
   });
 
-  document.getElementById("quotaInput").onchange = function (e) {
-    state.quota = parseInt(e.target.value) || 1;
-    save(); render();
+  var quotaBtn = document.getElementById("quotaBtn");
+  var quotaInput = document.getElementById("quotaInput");
+  quotaBtn.onclick = function () {
+    quotaBtn.style.display = "none";
+    quotaInput.style.display = "";
+    quotaInput.value = state.quota;
+    quotaInput.focus();
+    quotaInput.select();
   };
+  function commitQuota() {
+    var v = parseInt(quotaInput.value);
+    if (v >= 1) state.quota = v;
+    quotaInput.style.display = "none";
+    quotaBtn.style.display = "";
+    save(); render();
+  }
+  quotaInput.onblur = commitQuota;
+  quotaInput.onkeydown = function (e) { if (e.key === "Enter") quotaInput.blur(); };
 
   var undoBtn = document.getElementById("undoBtn");
   var undoTimer = null;
@@ -628,6 +817,20 @@
     a.click();
     URL.revokeObjectURL(a.href);
   };
+  document.getElementById("keyBtn").onclick = function () {
+    boneOpen = !boneOpen;
+    document.getElementById("boneBody").style.display = boneOpen ? "" : "none";
+    this.classList.toggle("turned", boneOpen);
+    if (boneOpen) {
+      render();
+      document.getElementById("boneBody").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+  document.getElementById("boneSearch").oninput = function (e) {
+    boneSearchQuery = e.target.value;
+    render();
+  };
+
   document.getElementById("importBtn").onclick = function () {
     document.getElementById("importFile").click();
   };
@@ -640,7 +843,7 @@
         var data = JSON.parse(reader.result);
         if (!data.bits) throw new Error("bad file");
         if (!confirm("Replace current notebook with this backup?")) return;
-        state = { bits: data.bits || [], quota: data.quota || 10, mics: data.mics || [] };
+        state = { bits: data.bits || [], quota: data.quota || 10, mics: data.mics || [], riffs: data.riffs || [], planned: data.planned || [], boneyard: data.boneyard || [] };
         save(); render();
       } catch (err) {
         alert("Couldn't read that file. It needs to be a backup exported from this notebook.");
