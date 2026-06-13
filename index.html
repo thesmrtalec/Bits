@@ -109,12 +109,7 @@
 
   /* ——— stage tabs / tags ——— */
   .filters { display: flex; border-bottom: 1px solid var(--rule); margin-bottom: 4px; overflow-x: auto; }
-  .cloud-row { display: flex; align-items: flex-start; gap: 8px; margin: 16px 0 14px; min-height: 28px; }
-  .tag-cloud { flex: 1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; min-width: 0; }
-  .cloud-tag { background: transparent; border: none; padding: 0; font-family: var(--serif); color: var(--muted); line-height: 1.3; transition: color .12s; }
-  .cloud-tag:hover { color: var(--accent); }
-  .cloud-tag.active { color: var(--accent2); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
-  .cloud-empty { font-size: 12.5px; color: var(--faint); font-style: italic; }
+  .cloud-row { display: flex; justify-content: flex-end; align-items: center; margin: 12px 0 4px; min-height: 24px; }
   .search-toggle { background: transparent; border: none; color: var(--faint); font-size: 14px; padding: 2px 4px; flex: 0 0 auto; opacity: .55; }
   .search-toggle:hover { opacity: 1; color: var(--accent); }
   .search-toggle.active { opacity: 1; color: var(--accent); }
@@ -224,8 +219,8 @@
   </div>
 
   <div class="filters" id="filters"></div>
+  <div class="tag-filters" id="tagFilters"></div>
   <div class="cloud-row">
-    <div class="tag-cloud" id="tagCloud"></div>
     <button class="search-toggle" id="searchIcon" title="Find a bit" aria-label="search bit text">&#128269;</button>
   </div>
   <div class="search-row" id="searchRow" style="display:none"><input type="search" id="searchBox" placeholder="find a line&hellip;" aria-label="search bit text" /></div>
@@ -432,35 +427,28 @@
     STAGES.forEach(function (s) {
       var count = state.bits.filter(function (b) { return b.status === s; }).length;
       var btn = el("button", "filter-btn" + (stageFilter === s ? " active" : ""), s + " (" + count + ")");
-      btn.onclick = function () { stageFilter = s; render(); };
+      btn.onclick = function () { stageFilter = s; tagFilter = null; render(); };
       filters.appendChild(btn);
     });
 
-    // tag cloud — frequency across all bits, sized by count
-    var counts = {};
+    // tag chips — scoped to current stage, with counts
+    var allTags = [];
     state.bits.forEach(function (b) {
-      b.tags.forEach(function (t) { counts[t] = (counts[t] || 0) + 1; });
+      if (b.status !== stageFilter) return;
+      b.tags.forEach(function (t) { if (allTags.indexOf(t) === -1) allTags.push(t); });
     });
-    var cloudTags = Object.keys(counts).sort(function (a, b2) {
-      return counts[b2] - counts[a] || a.localeCompare(b2);
+    allTags.sort();
+    var tf = document.getElementById("tagFilters");
+    tf.innerHTML = "";
+    if (tagFilter && allTags.indexOf(tagFilter) === -1) tagFilter = null;
+    allTags.forEach(function (t) {
+      var tagCount = state.bits.filter(function (b) {
+        return b.status === stageFilter && b.tags.indexOf(t) !== -1;
+      }).length;
+      var chip = el("button", "tag-chip" + (tagFilter === t ? " active" : ""), t + " (" + tagCount + ")");
+      chip.onclick = function () { tagFilter = tagFilter === t ? null : t; render(); };
+      tf.appendChild(chip);
     });
-    var tc = document.getElementById("tagCloud");
-    tc.innerHTML = "";
-    if (cloudTags.length === 0) {
-      tc.appendChild(el("span", "cloud-empty", "Tag your bits and they'll surface here."));
-    } else {
-      var max = counts[cloudTags[0]];
-      var min = counts[cloudTags[cloudTags.length - 1]];
-      cloudTags.forEach(function (t) {
-        var ratio = max === min ? 1 : (counts[t] - min) / (max - min);
-        var size = 13 + Math.round(ratio * 13); // 13px → 26px
-        var chip = el("button", "cloud-tag" + (tagFilter === t ? " active" : ""), t);
-        chip.style.fontSize = size + "px";
-        chip.title = counts[t] + (counts[t] === 1 ? " bit" : " bits");
-        chip.onclick = function () { tagFilter = tagFilter === t ? null : t; render(); };
-        tc.appendChild(chip);
-      });
-    }
 
     // list
     var list = document.getElementById("list");
@@ -471,7 +459,7 @@
         var hay = (b.text + " " + b.tags.join(" ")).toLowerCase();
         return hay.indexOf(q) !== -1;
       }
-      if (tagFilter) return b.tags.indexOf(tagFilter) !== -1;
+      if (tagFilter) return b.status === stageFilter && b.tags.indexOf(tagFilter) !== -1;
       return b.status === stageFilter;
     });
     visible.sort(function (a, b2) { return b2.created - a.created; });
