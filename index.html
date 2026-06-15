@@ -60,9 +60,6 @@
   .lab { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
   .lab strong { color: var(--accent2); font-size: 14px; }
   .quota-input { width: 46px; border: 1px solid var(--rule); border-radius: 5px; padding: 3px 5px; font-size: 12.5px; font-family: var(--mono); background: var(--card); color: var(--ink); }
-  .quota-btn { background: transparent; border: none; padding: 0; font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
-  .quota-btn strong { color: var(--accent2); font-size: 14px; }
-  .quota-num { border-bottom: 1px dashed var(--faint); }
   .last-mic { color: var(--faint); }
   .mic-btn { background: transparent; border: 1.5px solid var(--accent); color: var(--accent); border-radius: 999px; padding: 4px 12px; font-size: 12px; font-family: var(--mono); letter-spacing: .03em; }
   .mic-btn:hover { background: var(--accent); color: var(--onaccent); }
@@ -109,11 +106,6 @@
 
   /* ——— stage tabs / tags ——— */
   .filters { display: flex; border-bottom: 1px solid var(--rule); margin-bottom: 4px; overflow-x: auto; }
-  .cloud-row { display: flex; justify-content: flex-end; align-items: center; margin: 12px 0 4px; min-height: 24px; }
-  .search-toggle { background: transparent; border: none; color: var(--faint); font-size: 14px; padding: 2px 4px; flex: 0 0 auto; opacity: .55; }
-  .search-toggle:hover { opacity: 1; color: var(--accent); }
-  .search-toggle.active { opacity: 1; color: var(--accent); }
-  .search-row { margin: 0 0 14px; }
   .filter-btn { background: transparent; border: none; padding: 9px 10px; font-size: 12px; white-space: nowrap; flex: 0 0 auto; color: var(--faint); border-bottom: 2px solid transparent; font-family: var(--mono); letter-spacing: .04em; text-transform: uppercase; }
   .filter-btn.active { color: var(--accent2); font-weight: 700; border-bottom-color: var(--accent); }
   .tag-filters { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0 6px; }
@@ -125,17 +117,6 @@
   .day-header::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
   .bit { padding: 13px 15px; background: var(--card); border: 1px solid var(--rule); border-radius: 9px; margin-bottom: 9px; box-shadow: var(--cardshadow); }
   .bit-text { margin: 0 0 9px; font-size: 16px; line-height: 1.6; white-space: pre-wrap; cursor: pointer; }
-  .bit-row { display: flex; align-items: center; gap: 9px; cursor: pointer; min-width: 0; }
-  .bit-text.collapsed { margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0; }
-  .stage-dot { flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; }
-  .dot-concept { background: var(--st-concept); }
-  .dot-bit { background: var(--st-bit); }
-  .dot-ready { background: var(--st-ready); }
-  .dot-proven { background: var(--st-proven); }
-  .collapse-btn { background: transparent; border: none; color: var(--faint); font-size: 11.5px; font-family: var(--mono); padding: 2px 6px; }
-  .collapse-btn:hover { color: var(--accent); }
-  .search-row input { width: 100%; border: 1px solid var(--rule); border-radius: 8px; padding: 8px 12px; font-size: 15px; font-family: var(--serif); background: var(--card); color: var(--ink); }
-  .search-row input::placeholder { color: var(--faint); font-style: italic; }
   .edit-area { width: 100%; border: 1px solid var(--accent); border-radius: 7px; padding: 9px 10px; font-size: 16px; font-family: var(--serif); line-height: 1.6; margin: 0 0 9px; background: var(--card); color: var(--ink); min-height: 64px; resize: vertical; }
   .bit-meta { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; }
   .stage-btn { background: transparent; border: 1px solid; border-radius: 999px; padding: 2px 10px; font-size: 11px; font-family: var(--mono); letter-spacing: .03em; }
@@ -150,29 +131,43 @@
   .tag-input { width: 90px; border: 1px solid var(--rule); border-radius: 5px; padding: 3px 7px; font-size: 13px; font-family: var(--mono); background: var(--card); color: var(--ink); }
   .delete-btn { background: transparent; border: none; color: var(--faint); font-size: 13px; margin-left: auto; padding: 2px 6px; opacity: .7; }
   .delete-btn:hover { color: var(--accent2); opacity: 1; }
-  .delete-btn.armed { color: #fff; background: var(--accent2); border-radius: 5px; opacity: 1; font-family: var(--mono); font-size: 11.5px; padding: 3px 8px; }
+  .delete-btn.confirm { color: var(--accent2); font-family: var(--mono); font-size: 11px; opacity: 1; }
+  .bone-key { font-size: 15px; padding: 4px 4px; opacity: .55; }
+  .bone-key:hover { opacity: 1; }
+  .bone-note { font-size: 12.5px; color: var(--faint); font-style: italic; margin: 0 0 4px; }
+  .bone-card { background: var(--card); border: 1px solid var(--rule); border-left: 3px solid var(--faint); border-radius: 9px; padding: 12px 14px; margin-bottom: 9px; box-shadow: var(--cardshadow); }
+  .bone-card p { margin: 0 0 8px; font-size: 15px; line-height: 1.5; color: var(--ink); }
+  .bone-actions { display: flex; align-items: center; gap: 6px; }
+  .bone-digup { background: var(--accent); color: #fff; border: none; border-radius: 7px; padding: 4px 12px; font-family: var(--mono); font-size: 11px; }
+  .bone-when { font-family: var(--mono); font-size: 10.5px; color: var(--faint); }
+  .bone-del { margin-left: auto; background: transparent; border: none; color: var(--faint); font-family: var(--mono); font-size: 11px; padding: 2px 4px; }
+  .bone-del:hover { color: var(--accent2); }
   .empty { color: var(--faint); font-style: italic; font-size: 15px; padding: 14px 2px; }
 
-  .backup { margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--rule); display: flex; gap: 10px; align-items: center; }
-  .device-note { text-align: center; font-size: 11.5px; color: var(--faint); font-style: italic; margin: 18px 0 4px; }
+  .backup { margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--rule); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   .backup button { background: var(--card); border: 1px solid var(--rule); color: var(--muted); border-radius: 999px; padding: 4px 12px; font-size: 11.5px; font-family: var(--mono); }
   .backup button:hover { border-color: var(--accent); color: var(--accent); }
   .backup-note { font-size: 11.5px; color: var(--faint); font-style: italic; }
 
-  .boneyard { margin-top: 14px; }
-  .key-btn { background: transparent !important; border: none !important; color: var(--faint) !important; font-size: 15px !important; padding: 2px 4px !important; margin-left: auto; opacity: .55; transition: opacity .15s, transform .15s; }
-  .key-btn:hover { opacity: 1; }
-  .key-btn.turned { opacity: 1; color: var(--accent) !important; transform: rotate(90deg); }
-  .bone-toggle { background: transparent; border: none; color: var(--muted); font-family: var(--mono); font-size: 12.5px; padding: 0; letter-spacing: .04em; }
-  .bone-toggle:hover { color: var(--accent); }
-  .bone-note { font-size: 12.5px; color: var(--faint); font-style: italic; margin: 12px 0 2px; }
-  .bone-row { display: flex; align-items: center; gap: 9px; padding: 10px 0; border-bottom: 1px dashed var(--rule); }
-  .bone-text { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 15px; color: var(--muted); font-style: italic; cursor: pointer; }
-  .bone-text.open { white-space: pre-wrap; }
-  .bone-date { font-family: var(--mono); font-size: 10.5px; color: var(--faint); flex: 0 0 auto; }
-  .dig-btn { background: transparent; border: 1px solid var(--rule); border-radius: 999px; color: var(--muted); font-family: var(--mono); font-size: 11px; padding: 3px 10px; flex: 0 0 auto; }
-  .dig-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .bone-row .delete-btn { margin-left: 0; }
+  /* ——— notes drawer ——— */
+  .notes-tab { display: inline-flex; align-items: center; gap: 5px; background: transparent; border: none; color: var(--faint); font-family: var(--mono); font-size: 11.5px; padding: 4px 6px; }
+  .notes-tab:hover { color: var(--accent); }
+  .notes-overlay { position: fixed; inset: 0; background: var(--page); z-index: 50; display: none; flex-direction: column; }
+  .notes-overlay.open { display: flex; }
+  .notes-inner { max-width: 620px; width: 100%; margin: 0 auto; padding: 20px 18px 40px; display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  .notes-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .notes-head h2 { font-family: var(--serif); font-style: italic; font-size: 22px; margin: 0; color: var(--ink); }
+  .notes-close { margin-left: auto; background: transparent; border: 1px solid var(--rule); color: var(--muted); border-radius: 999px; padding: 5px 14px; font-family: var(--mono); font-size: 12px; }
+  .notes-canvas { width: 100%; border: 1px solid var(--rule); border-radius: 10px; padding: 14px; font-size: 16px; font-family: var(--serif); line-height: 1.6; background: var(--card); color: var(--ink); resize: none; min-height: 220px; box-shadow: inset 0 1px 4px rgba(0,0,0,.10); }
+  .notes-save { align-self: flex-start; margin-top: 10px; background: var(--accent); color: var(--onaccent); border: none; border-radius: 8px; padding: 8px 20px; font-family: var(--mono); font-size: 12px; letter-spacing: .07em; text-transform: uppercase; font-weight: 700; }
+  .notes-save:hover { background: var(--accent2); }
+  .notes-index { margin-top: 22px; overflow-y: auto; }
+  .notes-index-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .note-card { background: var(--card); border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 9px; padding: 12px 14px; margin-bottom: 9px; box-shadow: var(--cardshadow); cursor: pointer; }
+  .note-card p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .note-card .note-date { font-family: var(--mono); font-size: 10.5px; color: var(--faint); margin-top: 7px; display: flex; align-items: center; }
+  .note-del { margin-left: auto; background: transparent; border: none; color: var(--faint); font-family: var(--mono); font-size: 11px; padding: 0 4px; }
+  .note-del:hover { color: var(--accent2); }
 </style>
 </head>
 <body>
@@ -185,10 +180,9 @@
 
   <div class="strip">
     <div class="srow">
-      <span class="slabel">written this week</span>
-      <span class="lab"><strong id="weekConcepts">0</strong> concepts → <strong id="weekBits">0</strong> bits</span>
-      <button class="quota-btn" id="quotaBtn" title="Tap to change weekly quota"><strong id="weekCount">0</strong>/<span class="quota-num" id="quotaShow">7</span></button>
-      <input type="number" min="1" id="quotaInput" class="quota-input" aria-label="weekly quota" style="display:none" />
+      <span class="slabel">bits written this week</span>
+      <span class="lab"><strong id="weekCount">0</strong>/<strong id="quotaShow">10</strong></span>
+      <input type="number" min="1" id="quotaInput" class="quota-input" aria-label="weekly bit quota" />
     </div>
     <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
     <div class="srow">
@@ -220,10 +214,6 @@
 
   <div class="filters" id="filters"></div>
   <div class="tag-filters" id="tagFilters"></div>
-  <div class="cloud-row">
-    <button class="search-toggle" id="searchIcon" title="Find a bit" aria-label="search bit text">&#128269;</button>
-  </div>
-  <div class="search-row" id="searchRow" style="display:none"><input type="search" id="searchBox" placeholder="find a line&hellip;" aria-label="search bit text" /></div>
   <div id="list"></div>
   <p class="empty" id="empty" style="display:none"></p>
 
@@ -231,19 +221,36 @@
     <button id="exportBtn">Export backup</button>
     <button id="importBtn">Import</button>
     <input type="file" id="importFile" accept=".json" style="display:none" />
-    <button id="keyBtn" class="key-btn" title="The crypt" aria-label="open the crypt">&#128477;</button>
+    <button class="notes-tab" id="notesOpen">🗒 notes</button>
+    <button class="notes-tab bone-key" id="boneOpen" aria-label="open the boneyard" title="The boneyard">🗝️</button>
+    <span class="backup-note">Your data lives on this device only.</span>
   </div>
-
-  <div class="boneyard">
-    <div id="boneBody" style="display:none">
+  <div class="notes-overlay" id="boneOverlay">
+    <div class="notes-inner">
+      <div class="notes-head">
+        <h2 id="boneTitle">The boneyard</h2>
+        <button class="notes-close" id="boneClose">done</button>
+      </div>
       <p class="bone-note" id="boneNote"></p>
-      <div class="search-row"><input type="search" id="boneSearch" placeholder="dig&hellip;" aria-label="search the boneyard" /></div>
-      <div id="boneList"></div>
-      <p class="empty" id="boneEmpty" style="display:none"></p>
+      <div class="notes-index" style="margin-top:8px">
+        <div id="boneList"></div>
+      </div>
     </div>
   </div>
-
-  <p class="device-note">Lives here. Dies here. Export accordingly.</p>
+  <div class="notes-overlay" id="notesOverlay">
+    <div class="notes-inner">
+      <div class="notes-head">
+        <h2 id="notesTitle">Notes &amp; ideas</h2>
+        <button class="notes-close" id="notesClose">done</button>
+      </div>
+      <textarea class="notes-canvas" id="notesCanvas" placeholder="Free writing, workshop, set lists…"></textarea>
+      <button class="notes-save" id="notesSave">Save note</button>
+      <div class="notes-index">
+        <div class="notes-index-label">earlier notes</div>
+        <div id="notesList"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -251,8 +258,7 @@
   var KEY = "bit-notebook";
   var DAY = 86400000;
   var STALE_DAYS = 14;
-  var NEXT = { concept: "bit", bit: "ready", ready: "proven" };
-  var PREV = { bit: "concept", ready: "bit", proven: "ready" };
+  var NEXT = { concept: "bit", bit: "ready", ready: "proven", proven: "concept" };
   var STAGE = {
     concept: { label: "concept", color: "#8b97a3" },
     bit: { label: "bit", color: "#5a7d9a" },
@@ -275,43 +281,14 @@
     "It's not precious. Type it.",
     "The bar is on the floor. Trip over it.",
     "Overthinking detected. Dump it.",
-    "You had it in the car. Where'd it go?",
-    "Conceptualizing again? Cute.",
-    "You're stalling. I can tell from here.",
-    "That's a thought, not a bit. Type anyway.",
-    "The mic doesn't care how you feel about this.",
-    "Bishop's busy. The comic's not. Go.",
-    "You came back to this box. Don't waste the trip.",
-    "Idea's getting cold. Move.",
-    "You've polished this one to death in your head. Stop.",
-    "Funny later. Bad now. That's the deal.",
-    "Still reading? That's the problem.",
-    "Voice memo said it better. Type that.",
-    "You're not blocked. You're scared. Different fix.",
-    "Three people would've laughed already. Go.",
-    "Park the car. Empty your head into this box.",
-    "The good ones never felt good going in. Type it.",
-    "You sold a Tahoe to a guy who said no twice. Write the bit.",
-    "Editing's later. This is the part where you just bleed.",
-    "Nobody became funny by thinking harder.",
-    "You're doing the thing again. The thinking thing.",
-    "If it were precious you'd have written it by now.",
-    "Say it out loud, then type what's left.",
-    "The version in your head is worse than you think. Get it out.",
-    "Quota's watching. So am I."
+    "You had it in the car. Where'd it go?"
   ];
 
-  var state = { bits: [], quota: 10, mics: [], riffs: [], planned: [], boneyard: [] };
+  var state = { bits: [], quota: 10, mics: [], riffs: [], planned: [], notes: [], buried: [] };
   var stageFilter = "concept";
   var tagFilter = null;
   var tagEditing = null;
   var textEditing = null;
-  var expandedId = null;
-  var searchQuery = "";
-  var confirmDeleteId = null;
-  var boneSearchQuery = "";
-  var boneExpandedId = null;
-  var boneOpen = false;
 
   function load() {
     try {
@@ -329,7 +306,8 @@
         state.mics = data.mics || [];
         state.riffs = data.riffs || [];
         state.planned = data.planned || [];
-        state.boneyard = data.boneyard || [];
+        state.notes = data.notes || [];
+        state.buried = data.buried || [];
       }
     } catch (e) {}
   }
@@ -365,12 +343,7 @@
 
   function render() {
     // strip
-    var weekEntries = state.bits.filter(function (b) { return b.created >= startOfWeek(); });
-    var weekConcepts = weekEntries.filter(function (b) { return b.status === "concept"; }).length;
-    var weekBits = weekEntries.filter(function (b) { return b.status !== "concept"; }).length;
-    var weekCount = weekBits;
-    document.getElementById("weekConcepts").textContent = weekConcepts;
-    document.getElementById("weekBits").textContent = weekBits;
+    var weekCount = state.bits.filter(function (b) { return b.created >= startOfWeek(); }).length;
     document.getElementById("weekCount").textContent = weekCount;
     document.getElementById("quotaShow").textContent = state.quota;
     document.getElementById("quotaInput").value = state.quota;
@@ -411,7 +384,7 @@
         save(); render();
       };
       row.appendChild(did);
-      var skip = el("button", "planned-skip", "\u2715");
+      var skip = el("button", "planned-skip", "✕");
       skip.setAttribute("aria-label", "remove planned mic");
       skip.onclick = function () {
         state.planned = state.planned.filter(function (x) { return x.id !== p.id; });
@@ -427,25 +400,20 @@
     STAGES.forEach(function (s) {
       var count = state.bits.filter(function (b) { return b.status === s; }).length;
       var btn = el("button", "filter-btn" + (stageFilter === s ? " active" : ""), s + " (" + count + ")");
-      btn.onclick = function () { stageFilter = s; tagFilter = null; render(); };
+      btn.onclick = function () { stageFilter = s; render(); };
       filters.appendChild(btn);
     });
 
-    // tag chips — scoped to current stage, with counts
+    // tag filters
     var allTags = [];
     state.bits.forEach(function (b) {
-      if (b.status !== stageFilter) return;
       b.tags.forEach(function (t) { if (allTags.indexOf(t) === -1) allTags.push(t); });
     });
     allTags.sort();
     var tf = document.getElementById("tagFilters");
     tf.innerHTML = "";
-    if (tagFilter && allTags.indexOf(tagFilter) === -1) tagFilter = null;
     allTags.forEach(function (t) {
-      var tagCount = state.bits.filter(function (b) {
-        return b.status === stageFilter && b.tags.indexOf(t) !== -1;
-      }).length;
-      var chip = el("button", "tag-chip" + (tagFilter === t ? " active" : ""), t + " (" + tagCount + ")");
+      var chip = el("button", "tag-chip" + (tagFilter === t ? " active" : ""), t);
       chip.onclick = function () { tagFilter = tagFilter === t ? null : t; render(); };
       tf.appendChild(chip);
     });
@@ -453,14 +421,8 @@
     // list
     var list = document.getElementById("list");
     list.innerHTML = "";
-    var q = searchQuery.trim().toLowerCase();
     var visible = state.bits.filter(function (b) {
-      if (q) {
-        var hay = (b.text + " " + b.tags.join(" ")).toLowerCase();
-        return hay.indexOf(q) !== -1;
-      }
-      if (tagFilter) return b.status === stageFilter && b.tags.indexOf(tagFilter) !== -1;
-      return b.status === stageFilter;
+      return b.status === stageFilter && (!tagFilter || b.tags.indexOf(tagFilter) !== -1);
     });
     visible.sort(function (a, b2) { return b2.created - a.created; });
 
@@ -484,19 +446,6 @@
 
     function renderCard(b, list) {
       var card = el("div", "bit");
-      var expanded = expandedId === b.id || textEditing === b.id;
-
-      if (!expanded) {
-        var row = el("div", "bit-row");
-        row.appendChild(el("span", "stage-dot dot-" + b.status));
-        var firstLine = b.text.split("\n")[0];
-        row.appendChild(el("p", "bit-text collapsed", firstLine));
-        row.title = "Tap to open";
-        row.onclick = function () { expandedId = b.id; render(); };
-        card.appendChild(row);
-        list.appendChild(card);
-        return;
-      }
 
       if (textEditing === b.id) {
         var editArea = document.createElement("textarea");
@@ -506,7 +455,6 @@
           var v = editArea.value.trim();
           if (v) b.text = v;
           textEditing = null;
-          expandedId = b.id;
           save(); render();
         }
         editArea.onblur = commitText;
@@ -522,46 +470,30 @@
       } else {
         var p = el("p", "bit-text", b.text);
         p.title = "Tap to edit";
-        p.onclick = function () { textEditing = b.id; expandedId = b.id; render(); };
+        p.onclick = function () { textEditing = b.id; render(); };
         card.appendChild(p);
       }
 
       var meta = el("div", "bit-meta");
 
-      if (PREV[b.status]) {
-        var backBtn = el("button", "stage-btn st-" + b.status, "\u2190");
-        backBtn.title = "Back to " + STAGE[PREV[b.status]].label;
-        backBtn.onclick = function () {
-          b.status = PREV[b.status];
-          b.statusAt = Date.now();
-          save(); render();
-        };
-        meta.appendChild(backBtn);
-      }
-
-      var nxt = NEXT[b.status];
-      var stageBtn = el("button", "stage-btn st-" + b.status, STAGE[b.status].label + (nxt ? " \u2192" : ""));
-      if (nxt) {
-        stageBtn.title = "Move to " + STAGE[nxt].label;
-        stageBtn.onclick = function () {
-          b.status = nxt;
-          b.statusAt = Date.now();
-          save(); render();
-        };
-      } else {
-        stageBtn.style.cursor = "default";
-      }
+      var stageBtn = el("button", "stage-btn st-" + b.status, STAGE[b.status].label + " →");
+      stageBtn.title = "Tap to move to next stage";
+      stageBtn.onclick = function () {
+        b.status = NEXT[b.status];
+        b.statusAt = Date.now();
+        save(); render();
+      };
       meta.appendChild(stageBtn);
 
       var sd = staleDays(b);
       if (sd > 0) {
-        var st = el("span", "stale", "\u23F3 stale " + sd + "d");
+        var st = el("span", "stale", "⏳ stale " + sd + "d");
         st.title = "Advance it or kill it";
         meta.appendChild(st);
       }
 
       b.tags.forEach(function (t) {
-        var tag = el("button", "bit-tag", t + " \u2715");
+        var tag = el("button", "bit-tag", t + " ✕");
         tag.title = "Tap to remove tag";
         tag.onclick = function () {
           b.tags = b.tags.filter(function (x) { return x !== t; });
@@ -589,18 +521,13 @@
         meta.appendChild(addTag);
       }
 
-      var col = el("button", "collapse-btn", "\u25B4 close");
-      col.onclick = function () { expandedId = null; tagEditing = null; render(); };
-      meta.appendChild(col);
-
-      var del = el("button", "delete-btn", "\u2715");
-      del.title = "Bury it";
-      del.setAttribute("aria-label", "bury bit");
+      var del = el("button", "delete-btn", "✕");
+      del.setAttribute("aria-label", "bury entry");
+      del.title = "Bury to the boneyard";
       del.onclick = function () {
         b.buriedAt = Date.now();
-        state.boneyard.unshift(b);
+        state.buried.unshift(b);
         state.bits = state.bits.filter(function (x) { return x.id !== b.id; });
-        expandedId = null;
         save(); render();
       };
       meta.appendChild(del);
@@ -612,78 +539,9 @@
     var empty = document.getElementById("empty");
     if (visible.length === 0) {
       empty.style.display = "";
-      if (q) empty.textContent = "No matches for \u201C" + searchQuery.trim() + "\u201D.";
-      else empty.textContent = state.bits.length === 0 ? "Nothing yet." : "Nothing here. Adjust the filter.";
+      empty.textContent = state.bits.length === 0 ? "Nothing yet." : "Nothing here. Adjust the filter.";
     } else {
       empty.style.display = "none";
-    }
-
-    renderBoneyard();
-  }
-
-  function renderBoneyard() {
-    var n = state.boneyard.length;
-
-    var bq = boneSearchQuery.trim().toLowerCase();
-    var bones = state.boneyard.filter(function (b) {
-      if (!bq) return true;
-      return (b.text + " " + b.tags.join(" ")).toLowerCase().indexOf(bq) !== -1;
-    });
-
-    var bl = document.getElementById("boneList");
-    bl.innerHTML = "";
-    bones.forEach(function (b) {
-      var row = el("div", "bone-row");
-
-      var open = boneExpandedId === b.id;
-      var txt = el("p", "bone-text" + (open ? " open" : ""), open ? b.text : b.text.split("\n")[0]);
-      txt.title = "Tap to read";
-      txt.onclick = function () { boneExpandedId = open ? null : b.id; render(); };
-      row.appendChild(txt);
-
-      var d = new Date(b.buriedAt || b.created);
-      row.appendChild(el("span", "bone-date", "\u2020 " + d.toLocaleDateString("en-US", { month: "short", day: "numeric" })));
-
-      var dig = el("button", "dig-btn", "\u26CF dig up");
-      dig.title = "Resurrect as concept";
-      dig.onclick = function () {
-        b.status = "concept";
-        b.statusAt = Date.now();
-        delete b.buriedAt;
-        state.bits.unshift(b);
-        state.boneyard = state.boneyard.filter(function (x) { return x.id !== b.id; });
-        boneExpandedId = null;
-        save(); render();
-      };
-      row.appendChild(dig);
-
-      var armed = confirmDeleteId === b.id;
-      var del = el("button", "delete-btn" + (armed ? " armed" : ""), armed ? "gone forever?" : "\u2715");
-      del.setAttribute("aria-label", armed ? "confirm permanent delete" : "delete forever");
-      del.onclick = function () {
-        if (confirmDeleteId === b.id) {
-          state.boneyard = state.boneyard.filter(function (x) { return x.id !== b.id; });
-          confirmDeleteId = null;
-          save(); render();
-        } else {
-          confirmDeleteId = b.id;
-          render();
-          setTimeout(function () {
-            if (confirmDeleteId === b.id) { confirmDeleteId = null; render(); }
-          }, 3500);
-        }
-      };
-      row.appendChild(del);
-
-      bl.appendChild(row);
-    });
-
-    var be = document.getElementById("boneEmpty");
-    if (bones.length === 0) {
-      be.style.display = "";
-      be.textContent = bq ? "Nothing buried under that name." : "No bodies. Yet.";
-    } else {
-      be.style.display = "none";
     }
   }
 
@@ -707,49 +565,14 @@
     save(); render();
   }
   document.getElementById("addBtn").onclick = addBit;
-  document.getElementById("searchIcon").onclick = function () {
-    var row = document.getElementById("searchRow");
-    var box = document.getElementById("searchBox");
-    var opening = row.style.display === "none";
-    row.style.display = opening ? "" : "none";
-    this.classList.toggle("active", opening);
-    if (opening) { box.focus(); }
-    else { box.value = ""; searchQuery = ""; render(); }
-  };
-  document.getElementById("searchBox").oninput = function (e) {
-    searchQuery = e.target.value;
-    render();
-  };
-  document.getElementById("searchBox").onblur = function () {
-    if (!this.value.trim()) {
-      document.getElementById("searchRow").style.display = "none";
-      document.getElementById("searchIcon").classList.remove("active");
-      searchQuery = "";
-      render();
-    }
-  };
   draft.addEventListener("keydown", function (e) {
     if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) addBit();
   });
 
-  var quotaBtn = document.getElementById("quotaBtn");
-  var quotaInput = document.getElementById("quotaInput");
-  quotaBtn.onclick = function () {
-    quotaBtn.style.display = "none";
-    quotaInput.style.display = "";
-    quotaInput.value = state.quota;
-    quotaInput.focus();
-    quotaInput.select();
-  };
-  function commitQuota() {
-    var v = parseInt(quotaInput.value);
-    if (v >= 1) state.quota = v;
-    quotaInput.style.display = "none";
-    quotaBtn.style.display = "";
+  document.getElementById("quotaInput").onchange = function (e) {
+    state.quota = parseInt(e.target.value) || 1;
     save(); render();
-  }
-  quotaInput.onblur = commitQuota;
-  quotaInput.onkeydown = function (e) { if (e.key === "Enter") quotaInput.blur(); };
+  };
 
   var undoBtn = document.getElementById("undoBtn");
   var undoTimer = null;
@@ -805,20 +628,6 @@
     a.click();
     URL.revokeObjectURL(a.href);
   };
-  document.getElementById("keyBtn").onclick = function () {
-    boneOpen = !boneOpen;
-    document.getElementById("boneBody").style.display = boneOpen ? "" : "none";
-    this.classList.toggle("turned", boneOpen);
-    if (boneOpen) {
-      render();
-      document.getElementById("boneBody").scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-  document.getElementById("boneSearch").oninput = function (e) {
-    boneSearchQuery = e.target.value;
-    render();
-  };
-
   document.getElementById("importBtn").onclick = function () {
     document.getElementById("importFile").click();
   };
@@ -831,7 +640,7 @@
         var data = JSON.parse(reader.result);
         if (!data.bits) throw new Error("bad file");
         if (!confirm("Replace current notebook with this backup?")) return;
-        state = { bits: data.bits || [], quota: data.quota || 10, mics: data.mics || [], riffs: data.riffs || [], planned: data.planned || [], boneyard: data.boneyard || [] };
+        state = { bits: data.bits || [], quota: data.quota || 10, mics: data.mics || [] };
         save(); render();
       } catch (err) {
         alert("Couldn't read that file. It needs to be a backup exported from this notebook.");
@@ -839,6 +648,111 @@
     };
     reader.readAsText(file);
     e.target.value = "";
+  };
+
+  // ——— notes drawer ———
+  var noteEditing = null;
+  function renderNotes() {
+    var list = document.getElementById("notesList");
+    list.innerHTML = "";
+    var notes = (state.notes || []).slice().sort(function (a, b) { return b.updated - a.updated; });
+    if (notes.length === 0) { list.appendChild(el("p", "empty", "No notes yet.")); return; }
+    notes.forEach(function (note) {
+      var card = el("div", "note-card");
+      card.appendChild(el("p", null, note.text));
+      var meta = el("div", "note-date");
+      var d = new Date(note.updated);
+      meta.appendChild(el("span", null, d.toLocaleDateString("en-US", { month: "short", day: "numeric" }) + " · " + d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })));
+      var del = el("button", "note-del", "delete");
+      del.onclick = function (e) {
+        e.stopPropagation();
+        if (del.textContent === "delete") { del.textContent = "sure?"; setTimeout(function () { if (del) del.textContent = "delete"; }, 2500); return; }
+        state.notes = state.notes.filter(function (n) { return n.id !== note.id; });
+        save(); renderNotes();
+      };
+      meta.appendChild(del);
+      card.appendChild(meta);
+      card.onclick = function () {
+        noteEditing = note.id;
+        document.getElementById("notesCanvas").value = note.text;
+        document.getElementById("notesCanvas").focus();
+        document.getElementById("notesSave").textContent = "Update note";
+      };
+      list.appendChild(card);
+    });
+  }
+  function resetNoteEditor() {
+    noteEditing = null;
+    document.getElementById("notesCanvas").value = "";
+    document.getElementById("notesSave").textContent = "Save note";
+  }
+  document.getElementById("notesOpen").onclick = function () {
+    if (!state.notes) state.notes = [];
+    resetNoteEditor(); renderNotes();
+    document.getElementById("notesOverlay").classList.add("open");
+  };
+  document.getElementById("notesClose").onclick = function () {
+    document.getElementById("notesOverlay").classList.remove("open");
+  };
+  document.getElementById("notesSave").onclick = function () {
+    var t = document.getElementById("notesCanvas").value.trim();
+    if (!t) return;
+    if (!state.notes) state.notes = [];
+    if (noteEditing) {
+      state.notes = state.notes.map(function (n) { return n.id === noteEditing ? { id: n.id, text: t, updated: Date.now() } : n; });
+    } else {
+      state.notes.unshift({ id: Date.now().toString(36), text: t, updated: Date.now() });
+    }
+    save(); resetNoteEditor(); renderNotes();
+  };
+
+  // ——— boneyard ———
+  function renderBoneyard() {
+    var list = document.getElementById("boneList");
+    var note = document.getElementById("boneNote");
+    list.innerHTML = "";
+    var buried = (state.buried || []).slice().sort(function (a, b) { return (b.buriedAt || 0) - (a.buriedAt || 0); });
+    if (buried.length === 0) {
+      note.textContent = "The boneyard is empty. Buried bits rest here \u2014 dig one up to bring it back as a concept.";
+      return;
+    }
+    note.textContent = "Buried bits rest here. Dig one up to restore it as a concept, or lay it to rest for good.";
+    buried.forEach(function (b) {
+      var card = el("div", "bone-card");
+      card.appendChild(el("p", null, b.text));
+      var actions = el("div", "bone-actions");
+      var dig = el("button", "bone-digup", "\u26cf dig up");
+      dig.onclick = function () {
+        b.status = "concept";
+        b.statusAt = Date.now();
+        delete b.buriedAt;
+        state.buried = state.buried.filter(function (x) { return x.id !== b.id; });
+        state.bits.unshift(b);
+        save(); renderBoneyard(); render();
+      };
+      actions.appendChild(dig);
+      if (b.buriedAt) {
+        var when = new Date(b.buriedAt);
+        actions.appendChild(el("span", "bone-when", "buried " + when.toLocaleDateString("en-US", { month: "short", day: "numeric" })));
+      }
+      var del = el("button", "bone-del", "delete");
+      del.onclick = function () {
+        if (del.textContent === "delete") { del.textContent = "sure?"; setTimeout(function () { if (del) del.textContent = "delete"; }, 2500); return; }
+        state.buried = state.buried.filter(function (x) { return x.id !== b.id; });
+        save(); renderBoneyard();
+      };
+      actions.appendChild(del);
+      card.appendChild(actions);
+      list.appendChild(card);
+    });
+  }
+  document.getElementById("boneOpen").onclick = function () {
+    if (!state.buried) state.buried = [];
+    renderBoneyard();
+    document.getElementById("boneOverlay").classList.add("open");
+  };
+  document.getElementById("boneClose").onclick = function () {
+    document.getElementById("boneOverlay").classList.remove("open");
   };
 
   load();
