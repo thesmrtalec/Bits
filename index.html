@@ -168,6 +168,13 @@
   .note-card .note-date { font-family: var(--mono); font-size: 10.5px; color: var(--faint); margin-top: 7px; display: flex; align-items: center; }
   .note-del { margin-left: auto; background: transparent; border: none; color: var(--faint); font-family: var(--mono); font-size: 11px; padding: 0 4px; }
   .note-del:hover { color: var(--accent2); }
+
+  /* ——— workbench ——— */
+  .wb-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 7px; }
+  .wb-bit { min-height: 4.6em; flex: 0 0 auto; font-weight: 600; margin-bottom: 20px; }
+  .wb-pad { flex: 1 1 auto; min-height: 200px; }
+  .wb-meta { font-family: var(--mono); font-size: 10.5px; color: var(--faint); margin: 14px 0 0; }
+  .has-notes { font-family: var(--mono); font-size: 10px; color: var(--accent); opacity: .8; margin-left: 7px; }
 </style>
 </head>
 <body>
@@ -235,6 +242,19 @@
       <div class="notes-index" style="margin-top:8px">
         <div id="boneList"></div>
       </div>
+    </div>
+  </div>
+  <div class="notes-overlay" id="workbenchOverlay">
+    <div class="notes-inner">
+      <div class="notes-head">
+        <h2>Workbench</h2>
+        <button class="notes-close" id="wbClose">done</button>
+      </div>
+      <div class="wb-label">the bit</div>
+      <textarea class="notes-canvas wb-bit" id="wbBit" placeholder="the line as it stands…"></textarea>
+      <div class="wb-label">working it out</div>
+      <textarea class="notes-canvas wb-pad" id="wbPad" placeholder="alternate tags, rewrites, what it’s really about…"></textarea>
+      <div class="wb-meta" id="wbMeta"></div>
     </div>
   </div>
   <div class="notes-overlay" id="notesOverlay">
@@ -469,8 +489,8 @@
         }, 0);
       } else {
         var p = el("p", "bit-text", b.text);
-        p.title = "Tap to edit";
-        p.onclick = function () { textEditing = b.id; render(); };
+        p.title = "Tap to open workbench";
+        p.onclick = function () { openWorkbench(b.id); };
         card.appendChild(p);
       }
 
@@ -639,15 +659,46 @@
       try {
         var data = JSON.parse(reader.result);
         if (!data.bits) throw new Error("bad file");
-        if (!confirm("Replace current notebook with this backup?")) return;
-        state = { bits: data.bits || [], quota: data.quota || 10, mics: data.mics || [] };
-        save(); render();
+        if (!confirm("Replace this device\u2019s notebook with the backup? Anything on this device that isn\u2019t in the backup will be overwritten.")) return;
+        localStorage.setItem(KEY, JSON.stringify(data));
+        load(); render();
       } catch (err) {
         alert("Couldn't read that file. It needs to be a backup exported from this notebook.");
       }
     };
     reader.readAsText(file);
     e.target.value = "";
+  };
+
+  // ——— bit workbench ———
+  var workbenchId = null;
+  function openWorkbench(id) {
+    var b = state.bits.find(function (x) { return x.id === id; });
+    if (!b) return;
+    workbenchId = id;
+    document.getElementById("wbBit").value = b.text;
+    document.getElementById("wbPad").value = b.workshop || "";
+    var m = document.getElementById("wbMeta");
+    m.textContent = b.workshop ? "" : "This bit\u2019s working notes live here \u2014 separate from the line itself.";
+    document.getElementById("workbenchOverlay").classList.add("open");
+    setTimeout(function () { document.getElementById("wbBit").focus(); }, 0);
+  }
+  function saveWorkbench() {
+    if (!workbenchId) return;
+    var b = state.bits.find(function (x) { return x.id === workbenchId; });
+    if (!b) return;
+    var v = document.getElementById("wbBit").value.trim();
+    if (v) b.text = v;
+    b.workshop = document.getElementById("wbPad").value;
+    save();
+  }
+  document.getElementById("wbBit").oninput = saveWorkbench;
+  document.getElementById("wbPad").oninput = saveWorkbench;
+  document.getElementById("wbClose").onclick = function () {
+    saveWorkbench();
+    workbenchId = null;
+    document.getElementById("workbenchOverlay").classList.remove("open");
+    render();
   };
 
   // ——— notes drawer ———
